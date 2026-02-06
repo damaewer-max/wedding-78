@@ -1,53 +1,72 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Свадьба Александра и Анастасии</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Marck+Script&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --blue:#eaf5ff;
-  --accent:#a8d8ff;
-}
-
 body{
   margin:0;
   font-family:'Montserrat',sans-serif;
-  background:
-    linear-gradient(rgba(255,255,255,.8),rgba(255,255,255,.95)),
-    url("photo.jpg") center/cover fixed no-repeat;
-  color:#2b2b2b;
+  background:url("photo.jpg") center/cover fixed no-repeat;
+  color:#333;
+}
+
+/* стартовый экран */
+.hero{
+  height:100vh;
+  background:linear-gradient(rgba(255,255,255,.85),rgba(255,255,255,.85));
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+
+.hero h1{
+  font-family:'Marck Script',cursive;
+  font-size:58px;
+  margin:0;
+}
+
+.hero button{
+  margin-top:25px;
+  padding:14px 28px;
+  font-size:18px;
+  border:none;
+  border-radius:16px;
+  background:#a8d8ff;
+  cursor:pointer;
 }
 
 /* карточка */
 .card{
   max-width:820px;
   margin:40px auto;
-  padding:35px;
+  padding:30px;
   background:#ffffffee;
-  border-radius:22px;
+  border-radius:20px;
   box-shadow:0 10px 40px rgba(0,0,0,.12);
   text-align:center;
 }
 
-h1,h2{
+h2{
   font-family:'Marck Script',cursive;
+  margin-top:30px;
 }
 
 input,select{
   width:95%;
-  padding:12px;
+  padding:10px;
   margin:6px 0;
   border-radius:12px;
   border:1px solid #ddd;
-  font-size:15px;
 }
 
-/* ошибка поля */
 input.error{
   border:2px solid #ff6b6b;
   background:#fff1f1;
@@ -60,82 +79,178 @@ input.error{
 }
 
 button{
-  padding:14px 26px;
+  padding:12px 22px;
   border:none;
-  border-radius:14px;
-  font-size:16px;
+  border-radius:12px;
   cursor:pointer;
-  background:var(--accent);
 }
 
 .yes{background:#a8d8ff}
 .no{background:#f4c6c6}
 
-/* уведомление */
+.notice{
+  background:#fff4f4;
+  border:2px solid #ffd1d1;
+  padding:15px;
+  border-radius:12px;
+}
+
+.timeline div{
+  background:#f2f8ff;
+  margin:5px 0;
+  padding:8px;
+  border-radius:10px;
+}
+
 .toast{
   position:fixed;
   bottom:30px;
   left:50%;
   transform:translateX(-50%);
   background:#ff6b6b;
-  color:white;
-  padding:14px 24px;
-  border-radius:14px;
+  color:#fff;
+  padding:12px 20px;
+  border-radius:12px;
   opacity:0;
-  transition:.4s;
-  pointer-events:none;
+  transition:.3s;
 }
 
-.toast.show{
-  opacity:1;
-}
+.toast.show{opacity:1}
 
-.notice{
-  background:#fff4f4;
-  border:2px solid #ffd1d1;
-  padding:16px;
-  border-radius:16px;
-  margin-bottom:20px;
-}
-
-.total{
-  margin-top:10px;
-  font-weight:600;
-  color:#4d7fb3;
-}
+.hidden{display:none}
+.total{margin-top:10px;font-weight:bold}
 </style>
 </head>
 
 <body>
 
-<div class="card">
+<!-- старт -->
+<div id="start" class="hero">
+<h1>Александр & Анастасия</h1>
+<h2>23 мая 2026</h2>
+ <h2>Обращение</h2>
 
-<h1>Подтвердите присутствие</h1>
+    <div class="message">
+      <p>
+      Мы счастливы поделиться с вами самым важным и тёплым событием в нашей жизни — днём, когда мы станем семьёй.
+      В этот особенный момент нам хочется видеть рядом тех, кто дорог нашему сердцу,
+      кто разделяет с нами радость, улыбки и искренние эмоции.
+      </p>
 
-<div class="notice">
-<b>❗ Важно</b><br>
-Пожалуйста, укажите имена и фамилии всех гостей и точное количество человек.<br>
-Это очень важно для организации праздника. Спасибо за понимание ❤️
+      <p>
+      Приглашаем вас провести этот день вместе с нами, наполнить его смехом, объятиями,
+      добрыми словами и незабываемыми воспоминаниями.
+      Ваше присутствие — самый ценный подарок для нас.
+      </p>
+
+      <p>
+      Мы понимаем, что дарить цветы на свадьбу — это традиция, но мы не сможем насладиться их красотой в полной мере…
+      Будем рады любому подарку. И не важно, в какой конверт вы его упакуете.
+      </p>
+
+      <p>
+      Будем благодарны, если вы воздержитесь от криков «Горько» на празднике,
+      ведь поцелуй — это знак выражения чувств, он не может быть по заказу.
+      </p>
+
+      <p>
+      Будем с нетерпением ждать встречи и праздника, который мы создадим вместе.
+      </p>
+    </div>
+
+    <h2>Дресс-код</h2>
+    <p>Нежно-голубые, белые и пастельные оттенки</p>
+<button id="openBtn">Открыть приглашение</button>
 </div>
 
-<input id="name" placeholder="Имя и фамилия (например: Иван Петров)">
-<input id="count" type="number" value="1" min="1">
+<!-- приглашение -->
+<div id="invite" class="hidden">
 
-<select id="transfer">
+<div class="card">
+
+<h2>Программа дня</h2>
+<p>нажми на пункт чтобы открыть карту</p>
+<div class="timeline">
+  <div>13:20 — выкуп невесты</div>
+
+  <div class="mapLink" data-map="zags">
+    15:40 — роспись в ЗАГСе
+  </div>
+
+  <div>16:10 — прогулка (по желанию)</div>
+
+  <div class="mapLink" data-map="banket">
+    18:00 — банкет
+  </div>
+</div>
+
+<h2>Карта</h2>
+<iframe id="mapFrame"
+  width="100%"
+  height="250"
+  style="border:none;border-radius:12px"
+  src="https://maps.google.com/maps?q=Ростов-на-Дону Университетский 48&output=embed">
+</iframe>
+
+<style>
+.mapLink{
+  background:#f2f8ff;
+  margin:5px 0;
+  padding:8px;
+  border-radius:10px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.mapLink:hover{
+  background:#dfefff;
+  transform:scale(1.02);
+}
+</style>
+
+<script>
+const mapFrame = document.getElementById("mapFrame");
+
+document.querySelectorAll(".mapLink").forEach(el=>{
+  el.addEventListener("click", ()=>{
+
+    if(el.dataset.map === "zags"){
+      mapFrame.src = "https://maps.google.com/maps?q=Ростов-на-Дону Университетский 48&output=embed";
+    }
+
+    if(el.dataset.map === "banket"){
+      mapFrame.src = "https://maps.google.com/maps?q=Ростов-на-Дону Левобережная 50&output=embed";
+    }
+
+  });
+});
+</script>
+
+
+<h2>Подтвердите присутствие</h2>
+
+<div class="notice">
+❗ Укажите имя и фамилию всех гостей и точное количество человек
+</div>
+
+<input id="nameInput" placeholder="Имя и фамилия">
+<input id="countInput" type="number" value="1" min="1">
+
+<select id="transferSelect">
 <option>Трансфер не нужен</option>
 <option>Только до торжества</option>
 <option>Только после торжества</option>
 <option>До и после торжества</option>
 </select>
 
-<select id="food">
+<select id="foodSelect">
 <option>Нет особенностей</option>
 <option>Не ем мясо</option>
 <option>Не ем рыбу</option>
 <option>Вегетарианец</option>
 </select>
 
-<select id="alcohol">
+<select id="alcoholSelect">
 <option>Красное вино</option>
 <option>Белое вино</option>
 <option>Шампанское</option>
@@ -144,57 +259,66 @@ button{
 <option>Не буду пить алкоголь</option>
 </select>
 
-<select id="kids">
+<select id="kidsSelect">
 <option>Без ребёнка</option>
 <option>С ребёнком</option>
 </select>
 
 <div class="buttons">
-<button class="yes" onclick="saveAnswer('Да')">Приду</button>
-<button class="no" onclick="saveAnswer('Нет')">Не смогу</button>
+<button class="yes" id="yesBtn">Приду</button>
+<button class="no" id="noBtn">Не смогу</button>
 </div>
 
 <div id="totalGuests" class="total"></div>
 
-<button onclick="adminDownload()">Скачать ответы</button>
+<button id="downloadBtn">Скачать ответы</button>
 
+</div>
 </div>
 
 <div id="toast" class="toast"></div>
 
 <script>
-/* уведомление */
-function showToast(text){
-  toast.textContent=text;
+const start=document.getElementById("start");
+const invite=document.getElementById("invite");
+document.getElementById("openBtn").onclick=()=>{
+  start.classList.add("hidden");
+  invite.classList.remove("hidden");
+};
+
+const nameInput=document.getElementById("nameInput");
+const countInput=document.getElementById("countInput");
+const transfer=document.getElementById("transferSelect");
+const food=document.getElementById("foodSelect");
+const alcohol=document.getElementById("alcoholSelect");
+const kids=document.getElementById("kidsSelect");
+const toast=document.getElementById("toast");
+const total=document.getElementById("totalGuests");
+
+function showToast(t){
+  toast.textContent=t;
   toast.classList.add("show");
   setTimeout(()=>toast.classList.remove("show"),3000);
 }
 
-/* проверка имени */
-function validateName(){
-  const val=name.value.trim();
-
-  if(val.split(/\s+/).length < 2){
-    name.classList.add("error");
-    showToast("Пожалуйста, укажите имя и фамилию");
-    name.focus();
+function validate(){
+  if(nameInput.value.trim().split(/\s+/).length<2){
+    nameInput.classList.add("error");
+    showToast("Введите имя и фамилию");
     return false;
   }
-
-  name.classList.remove("error");
+  nameInput.classList.remove("error");
   return true;
 }
 
-/* сохранение */
-function saveAnswer(ans){
-
-  if(!validateName()) return;
+function save(ans){
+  if(!validate())return;
 
   const data=JSON.parse(localStorage.getItem("wedding"))||[];
 
   data.push({
-    name:name.value,
-    guests:count.value,
+    name:nameInput.value,
+    guests:countInput.value,
     answer:ans,
     transfer:transfer.value,
     food:food.value,
@@ -205,48 +329,39 @@ function saveAnswer(ans){
 
   localStorage.setItem("wedding",JSON.stringify(data));
   updateTotal();
-  showToast("Ответ сохранён ❤️ see you!");
+  showToast("Спасибо ❤️");
 }
 
-/* подсчёт */
+document.getElementById("yesBtn").onclick=()=>save("Да");
+document.getElementById("noBtn").onclick=()=>save("Нет");
+
 function updateTotal(){
   const data=JSON.parse(localStorage.getItem("wedding"))||[];
   let sum=0;
-  data.forEach(r=>{
-    if(r.answer==="Да") sum+=Number(r.guests);
-  });
-  totalGuests.textContent="Всего подтвердили: "+sum+" гостей";
+  data.forEach(r=>{if(r.answer==="Да")sum+=Number(r.guests)});
+  total.textContent="Всего подтвердили: "+sum+" гостей";
 }
 
-/* пароль */
-function adminDownload(){
+document.getElementById("downloadBtn").onclick=()=>{
   const pass=prompt("Введите пароль");
-  if(pass==="3005") downloadCSV();
-}
+  if(pass!=="3005")return;
 
-/* Excel */
-function downloadCSV(){
   const data=JSON.parse(localStorage.getItem("wedding"))||[];
+  const rows=[["Имя","Гостей","Ответ","Трансфер","Еда","Алкоголь","Дети","Время"]];
 
-  const rows=[["Имя","Гостей","Ответ","Трансфер","Питание","Алкоголь","Ребёнок","Время"]];
-
-  data.forEach(r=>{
-    rows.push([r.name,r.guests,r.answer,r.transfer,r.food,r.alcohol,r.kids,r.time]);
-  });
+  data.forEach(r=>rows.push([r.name,r.guests,r.answer,r.transfer,r.food,r.alcohol,r.kids,r.time]));
 
   const csv=rows.map(r=>r.join(";")).join("\n");
-
   const blob=new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8;"});
+
   const a=document.createElement("a");
   a.href=URL.createObjectURL(blob);
   a.download="answers.csv";
   a.click();
-}
+};
 
 updateTotal();
 </script>
 
 </body>
 </html>
-
-

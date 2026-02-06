@@ -18,7 +18,6 @@ body{
     url("photo.jpg") center/cover fixed no-repeat;
 }
 
-/* лепестки */
 canvas{
   position:fixed;
   top:0;
@@ -26,7 +25,6 @@ canvas{
   pointer-events:none;
 }
 
-/* старт */
 .start{
   height:100vh;
   display:flex;
@@ -36,7 +34,7 @@ canvas{
 }
 
 .card{
-  max-width:720px;
+  max-width:760px;
   margin:40px auto;
   padding:35px 25px 50px;
   background:#ffffffee;
@@ -46,30 +44,21 @@ canvas{
 }
 
 h1{font-size:36px;margin:10px 0}
-h2{margin-top:30px}
+h2{margin-top:30px;color:#4d7fb3}
 
 .timer{
   font-size:22px;
   font-weight:600;
   margin:18px 0;
-  color:#4d7fb3;
 }
 
-/* блок с текстом приглашения */
 .message{
   text-align:left;
   line-height:1.6;
-  margin-top:20px;
-  font-size:16px;
 }
 
-.message p{
-  margin:12px 0;
-}
-
-/* форма */
-input{
-  width:90%;
+input, select{
+  width:95%;
   padding:14px;
   margin:8px 0;
   border-radius:12px;
@@ -107,7 +96,6 @@ button{
 
 <div id="start" class="start">
   <h1>Александр & Анастасия</h1>
-  <p>приглашают вас на свадьбу</p>
   <button onclick="openInvite()">Открыть приглашение</button>
 </div>
 
@@ -117,47 +105,63 @@ button{
     <h1>23 мая 2026 💍</h1>
     <div id="timer" class="timer"></div>
 
+    <h2>Роспись</h2>
+    <p>
+      ЗАГС — 15:40<br>
+      Университетский пер., 48/2А, Ростов-на-Дону
+    </p>
+
     <h2>Обращение</h2>
-
     <div class="message">
-      <p>
-      Мы счастливы поделиться с вами самым важным и тёплым событием в нашей жизни — днём, когда мы станем семьёй.
-      В этот особенный момент нам хочется видеть рядом тех, кто дорог нашему сердцу,
-      кто разделяет с нами радость, улыбки и искренние эмоции.
-      </p>
-
-      <p>
-      Приглашаем вас провести этот день вместе с нами, наполнить его смехом, объятиями,
-      добрыми словами и незабываемыми воспоминаниями.
-      Ваше присутствие — самый ценный подарок для нас.
-      </p>
-
-      <p>
-      Мы понимаем, что дарить цветы на свадьбу — это традиция, но мы не сможем насладиться их красотой в полной мере…
-      Будем рады любому подарку. И не важно, в какой конверт вы его упакуете.
-      </p>
-
-      <p>
-      Будем благодарны, если вы воздержитесь от криков «Горько» на празднике,
-      ведь поцелуй — это знак выражения чувств, он не может быть по заказу.
-      </p>
-
-      <h3>
-      Будем с нетерпением ждать вас 23 мая в 18:00 по адресу г.Ростов-на-Дону, ул. Левобережная 50, ресторан "Жардин".
-      </h3>
+      <p>Мы счастливы поделиться с вами самым важным и тёплым событием в нашей жизни — днём, когда мы станем семьёй.</p>
+      <p>Приглашаем вас провести этот день вместе с нами. Ваше присутствие — самый ценный подарок для нас.</p>
+      <p>Будем рады любому подарку. И не важно, в какой конверт вы его упакуете.</p>
+      <p>Просим воздержаться от криков «Горько» — поцелуй должен быть по велению сердца.</p>
     </div>
 
     <h2>Дресс-код</h2>
-    <p>Нежно-голубые, белые и пастельные оттенки</p>
+    <p>Нежно-голубые и белые оттенки</p>
 
     <h2>Подтвердите присутствие</h2>
 
     <input id="name" placeholder="Ваше имя"/>
     <input id="count" type="number" value="1" min="1" placeholder="Сколько человек"/>
 
+    <h2>Трансфер</h2>
+    <select id="transfer">
+      <option>Нет</option>
+      <option>Только до торжества</option>
+      <option>Только после торжества</option>
+      <option>До и после торжества</option>
+    </select>
+
+    <h2>Питание</h2>
+    <select id="food">
+      <option>Нет особенностей</option>
+      <option>Не ем мясо</option>
+      <option>Не ем рыбу</option>
+      <option>Вегетарианец</option>
+    </select>
+
+    <h2>Алкоголь</h2>
+    <select id="alcohol">
+      <option>Красное вино</option>
+      <option>Белое вино</option>
+      <option>Шампанское</option>
+      <option>Виски/коньяк</option>
+      <option>Водка</option>
+      <option>Не буду пить алкоголь</option>
+    </select>
+
+    <h2>Ребёнок</h2>
+    <select id="kids">
+      <option>Нет</option>
+      <option>Да</option>
+    </select>
+
     <div class="buttons">
-      <button class="yes" onclick="saveAnswer('Да')">Да</button>
-      <button class="no" onclick="saveAnswer('Нет')">Нет</button>
+      <button class="yes" onclick="saveAnswer('Да')">Приду</button>
+      <button class="no" onclick="saveAnswer('Нет')">Не смогу</button>
     </div>
 
     <button class="musicBtn" onclick="toggleMusic()">Музыка вкл/выкл</button>
@@ -177,7 +181,6 @@ function openInvite(){
   music.play().catch(()=>{});
 }
 
-/* музыка */
 function toggleMusic(){
   if(music.paused) music.play();
   else music.pause();
@@ -185,27 +188,26 @@ function toggleMusic(){
 
 /* таймер */
 const wedding = new Date("2026-05-23T15:00:00");
-
 setInterval(()=>{
   const diff = wedding - new Date();
   const d = Math.floor(diff/86400000);
   const h = Math.floor(diff/3600000)%24;
   const m = Math.floor(diff/60000)%60;
-
   timer.textContent = `До свадьбы: ${d} д ${h} ч ${m} мин`;
 },1000);
 
-/* сохранение ответов */
+/* сохранение */
 function saveAnswer(answer){
-  const nameVal = name.value || "Без имени";
-  const countVal = count.value || 1;
-
   const list = JSON.parse(localStorage.getItem("wedding")) || [];
 
   list.push({
-    name:nameVal,
-    guests:countVal,
+    name:name.value || "Без имени",
+    guests:count.value || 1,
     answer:answer,
+    transfer:transfer.value,
+    food:food.value,
+    alcohol:alcohol.value,
+    kids:kids.value,
     time:new Date().toLocaleString("ru-RU")
   });
 
@@ -213,25 +215,26 @@ function saveAnswer(answer){
   alert("Спасибо за ответ ❤️");
 }
 
-/* экспорт Excel (UTF-8 + BOM + столбцы) */
+/* Excel */
 function downloadCSV(){
   const data = JSON.parse(localStorage.getItem("wedding")) || [];
 
-  const rows = [
-    ["Имя","Количество гостей","Ответ","Время"]
-  ];
+  const rows = [[
+    "Имя","Количество гостей","Ответ",
+    "Трансфер","Питание","Алкоголь","Ребёнок","Время"
+  ]];
 
   data.forEach(r=>{
-    rows.push([r.name, r.guests, r.answer, r.time]);
+    rows.push([
+      r.name,r.guests,r.answer,
+      r.transfer,r.food,r.alcohol,r.kids,r.time
+    ]);
   });
 
-  const csv = rows.map(r => r.join(";")).join("\n");
+  const csv = rows.map(r=>r.join(";")).join("\n");
   const BOM = "\uFEFF";
 
-  const blob = new Blob([BOM + csv], {
-    type:"text/csv;charset=utf-8;"
-  });
-
+  const blob = new Blob([BOM + csv], {type:"text/csv;charset=utf-8;"});
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
   a.download = "answers.csv";
@@ -239,41 +242,30 @@ function downloadCSV(){
 }
 
 /* лепестки */
-const canvas = document.getElementById("petals");
-const ctx = canvas.getContext("2d");
+const canvas=document.getElementById("petals");
+const ctx=canvas.getContext("2d");
+canvas.width=innerWidth;
+canvas.height=innerHeight;
 
-canvas.width = innerWidth;
-canvas.height = innerHeight;
-
-let petals = [];
-
+let petals=[];
 for(let i=0;i<40;i++){
-  petals.push({
-    x:Math.random()*innerWidth,
-    y:Math.random()*innerHeight,
-    speed:Math.random()*1+0.5
-  });
+  petals.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,s:Math.random()*1+0.5});
 }
 
 function draw(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
   ctx.fillStyle="#ffdbe8";
-
   petals.forEach(p=>{
     ctx.beginPath();
     ctx.arc(p.x,p.y,5,0,6.28);
     ctx.fill();
-    p.y += p.speed;
-    if(p.y > innerHeight) p.y = 0;
+    p.y+=p.s;
+    if(p.y>innerHeight)p.y=0;
   });
-
   requestAnimationFrame(draw);
 }
-
 draw();
 </script>
 
 </body>
 </html>
-
-

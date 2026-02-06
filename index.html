@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -279,6 +280,11 @@ document.querySelectorAll(".mapLink").forEach(el=>{
 <div id="toast" class="toast"></div>
 
 <script>
+const SUPABASE_URL = "https://jwntfrnwwoeteohrukvs.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3bnRmcm53d29ldGVvaHJ1a3ZzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAzOTA2OTcsImV4cCI6MjA4NTk2NjY5N30.t6yZLQcr8t_kidmuOnKV-liewR_RiN7lcGpTPobREwI";
+
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
 const start=document.getElementById("start");
 const invite=document.getElementById("invite");
 document.getElementById("openBtn").onclick=()=>{
@@ -311,45 +317,63 @@ function validate(){
   return true;
 }
 
-function save(ans){
-  if(!validate())return;
+/* ===== НОВОЕ СОХРАНЕНИЕ В SUPABASE ===== */
+async function save(ans){
+  if(!validate()) return;
 
-  const data=JSON.parse(localStorage.getItem("wedding"))||[];
+  const row = {
+    name: nameInput.value,
+    guests: Number(countInput.value),
+    answer: ans,
+    transfer: transfer.value,
+    food: food.value,
+    alcohol: alcohol.value,
+    kids: kids.value,
+    time: new Date().toLocaleString("ru-RU")
+  };
 
-  data.push({
-    name:nameInput.value,
-    guests:countInput.value,
-    answer:ans,
-    transfer:transfer.value,
-    food:food.value,
-    alcohol:alcohol.value,
-    kids:kids.value,
-    time:new Date().toLocaleString("ru-RU")
-  });
+  const { error } = await supabaseClient
+    .from("wedding")
+    .insert([row]);
 
-  localStorage.setItem("wedding",JSON.stringify(data));
-  updateTotal();
+  if(error){
+    showToast("Ошибка сохранения");
+    return;
+  }
+
   showToast("Спасибо ❤️");
+  updateTotal();
 }
 
 document.getElementById("yesBtn").onclick=()=>save("Да");
 document.getElementById("noBtn").onclick=()=>save("Нет");
 
-function updateTotal(){
-  const data=JSON.parse(localStorage.getItem("wedding"))||[];
+/* ===== ПОДСЧЁТ С СЕРВЕРА ===== */
+async function updateTotal(){
+  const { data } = await supabaseClient
+    .from("wedding")
+    .select("guests, answer");
+
   let sum=0;
-  data.forEach(r=>{if(r.answer==="Да")sum+=Number(r.guests)});
+  data?.forEach(r=>{
+    if(r.answer==="Да") sum+=Number(r.guests);
+  });
+
   total.textContent="Всего подтвердили: "+sum+" гостей";
 }
 
-document.getElementById("downloadBtn").onclick=()=>{
+/* ===== СКАЧИВАНИЕ CSV ИЗ БД ===== */
+document.getElementById("downloadBtn").onclick=async()=>{
   const pass=prompt("Введите пароль");
   if(pass!=="3005")return;
 
-  const data=JSON.parse(localStorage.getItem("wedding"))||[];
+  const { data } = await supabaseClient.from("wedding").select("*");
+
   const rows=[["Имя","Гостей","Ответ","Трансфер","Еда","Алкоголь","Дети","Время"]];
 
-  data.forEach(r=>rows.push([r.name,r.guests,r.answer,r.transfer,r.food,r.alcohol,r.kids,r.time]));
+  data.forEach(r=>{
+    rows.push([r.name,r.guests,r.answer,r.transfer,r.food,r.alcohol,r.kids,r.time]);
+  });
 
   const csv=rows.map(r=>r.join(";")).join("\n");
   const blob=new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8;"});
@@ -363,5 +387,7 @@ document.getElementById("downloadBtn").onclick=()=>{
 updateTotal();
 </script>
 
+
 </body>
 </html>
+

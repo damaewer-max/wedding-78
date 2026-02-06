@@ -3,74 +3,60 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
 <title>Свадьба Александра и Анастасии</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Marck+Script&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
 <style>
+:root{
+  --blue:#eaf5ff;
+  --accent:#a8d8ff;
+}
+
 body{
   margin:0;
-  font-family: system-ui, -apple-system, sans-serif;
-  color:#2b2b2b;
-  text-align:center;
-  overflow-x:hidden;
-
+  font-family:'Montserrat',sans-serif;
   background:
-    linear-gradient(rgba(255,255,255,.75), rgba(255,255,255,.9)),
+    linear-gradient(rgba(255,255,255,.8),rgba(255,255,255,.95)),
     url("photo.jpg") center/cover fixed no-repeat;
+  color:#2b2b2b;
 }
 
-canvas{
-  position:fixed;
-  top:0;
-  left:0;
-  pointer-events:none;
-}
-
-.start{
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-}
-
+/* карточка */
 .card{
-  max-width:760px;
+  max-width:820px;
   margin:40px auto;
-  padding:35px 25px 50px;
+  padding:35px;
   background:#ffffffee;
-  backdrop-filter:blur(6px);
   border-radius:22px;
   box-shadow:0 10px 40px rgba(0,0,0,.12);
+  text-align:center;
 }
 
-h1{font-size:36px;margin:10px 0}
-h2{margin-top:30px;color:#4d7fb3}
-
-.timer{
-  font-size:22px;
-  font-weight:600;
-  margin:18px 0;
+h1,h2{
+  font-family:'Marck Script',cursive;
 }
 
-.message{
-  text-align:left;
-  line-height:1.6;
-}
-
-input, select{
+input,select{
   width:95%;
-  padding:14px;
-  margin:8px 0;
+  padding:12px;
+  margin:6px 0;
   border-radius:12px;
   border:1px solid #ddd;
-  font-size:16px;
+  font-size:15px;
+}
+
+/* ошибка поля */
+input.error{
+  border:2px solid #ff6b6b;
+  background:#fff1f1;
 }
 
 .buttons{
   display:flex;
+  gap:10px;
   justify-content:center;
-  gap:12px;
-  margin-top:12px;
 }
 
 button{
@@ -79,131 +65,137 @@ button{
   border-radius:14px;
   font-size:16px;
   cursor:pointer;
+  background:var(--accent);
 }
 
 .yes{background:#a8d8ff}
-.no{background:#f2c4c4}
-.download{margin-top:18px;background:#e3e3e3}
-.musicBtn{margin-top:12px;background:#dfefff}
+.no{background:#f4c6c6}
 
-.hidden{display:none}
+/* уведомление */
+.toast{
+  position:fixed;
+  bottom:30px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#ff6b6b;
+  color:white;
+  padding:14px 24px;
+  border-radius:14px;
+  opacity:0;
+  transition:.4s;
+  pointer-events:none;
+}
+
+.toast.show{
+  opacity:1;
+}
+
+.notice{
+  background:#fff4f4;
+  border:2px solid #ffd1d1;
+  padding:16px;
+  border-radius:16px;
+  margin-bottom:20px;
+}
+
+.total{
+  margin-top:10px;
+  font-weight:600;
+  color:#4d7fb3;
+}
 </style>
 </head>
 
 <body>
 
-<canvas id="petals"></canvas>
+<div class="card">
 
-<div id="start" class="start">
-  <h1>Александр & Анастасия</h1>
-  <button onclick="openInvite()">Открыть приглашение</button>
+<h1>Подтвердите присутствие</h1>
+
+<div class="notice">
+<b>❗ Важно</b><br>
+Пожалуйста, укажите имена и фамилии всех гостей и точное количество человек.<br>
+Это очень важно для организации праздника. Спасибо за понимание ❤️
 </div>
 
-<div id="invite" class="hidden">
-  <div class="card">
+<input id="name" placeholder="Имя и фамилия (например: Иван Петров)">
+<input id="count" type="number" value="1" min="1">
 
-    <h1>23 мая 2026 💍</h1>
-    <div id="timer" class="timer"></div>
+<select id="transfer">
+<option>Трансфер не нужен</option>
+<option>Только до торжества</option>
+<option>Только после торжества</option>
+<option>До и после торжества</option>
+</select>
 
-    <h2>Роспись</h2>
-    <p>
-      ЗАГС — 15:40<br>
-      Университетский пер., 48/2А, Ростов-на-Дону
-    </p>
+<select id="food">
+<option>Нет особенностей</option>
+<option>Не ем мясо</option>
+<option>Не ем рыбу</option>
+<option>Вегетарианец</option>
+</select>
 
-    <h2>Обращение</h2>
-    <div class="message">
-      <p>Мы счастливы поделиться с вами самым важным и тёплым событием в нашей жизни — днём, когда мы станем семьёй.</p>
-      <p>Приглашаем вас провести этот день вместе с нами. Ваше присутствие — самый ценный подарок для нас.</p>
-      <p>Будем рады любому подарку. И не важно, в какой конверт вы его упакуете.</p>
-      <p>Просим воздержаться от криков «Горько» — поцелуй должен быть по велению сердца.</p>
-    </div>
+<select id="alcohol">
+<option>Красное вино</option>
+<option>Белое вино</option>
+<option>Шампанское</option>
+<option>Виски/коньяк</option>
+<option>Водка</option>
+<option>Не буду пить алкоголь</option>
+</select>
 
-    <h2>Дресс-код</h2>
-    <p>Нежно-голубые и белые оттенки</p>
+<select id="kids">
+<option>Без ребёнка</option>
+<option>С ребёнком</option>
+</select>
 
-    <h2>Подтвердите присутствие</h2>
-
-    <input id="name" placeholder="Ваше имя"/>
-    <input id="count" type="number" value="1" min="1" placeholder="Сколько человек"/>
-
-    <h2>Трансфер</h2>
-    <select id="transfer">
-      <option>Нет</option>
-      <option>Только до торжества</option>
-      <option>Только после торжества</option>
-      <option>До и после торжества</option>
-    </select>
-
-    <h2>Питание</h2>
-    <select id="food">
-      <option>Нет особенностей</option>
-      <option>Не ем мясо</option>
-      <option>Не ем рыбу</option>
-      <option>Вегетарианец</option>
-    </select>
-
-    <h2>Алкоголь</h2>
-    <select id="alcohol">
-      <option>Красное вино</option>
-      <option>Белое вино</option>
-      <option>Шампанское</option>
-      <option>Виски/коньяк</option>
-      <option>Водка</option>
-      <option>Не буду пить алкоголь</option>
-    </select>
-
-    <h2>Ребёнок</h2>
-    <select id="kids">
-      <option>Нет</option>
-      <option>Да</option>
-    </select>
-
-    <div class="buttons">
-      <button class="yes" onclick="saveAnswer('Да')">Приду</button>
-      <button class="no" onclick="saveAnswer('Нет')">Не смогу</button>
-    </div>
-
-    <button class="musicBtn" onclick="toggleMusic()">Музыка вкл/выкл</button>
-    <button class="download" onclick="downloadCSV()">Скачать ответы (Excel)</button>
-
-  </div>
+<div class="buttons">
+<button class="yes" onclick="saveAnswer('Да')">Приду</button>
+<button class="no" onclick="saveAnswer('Нет')">Не смогу</button>
 </div>
 
-<audio id="music" loop>
-  <source src="music.mp3" type="audio/mpeg">
-</audio>
+<div id="totalGuests" class="total"></div>
+
+<button onclick="adminDownload()">Скачать ответы</button>
+
+</div>
+
+<div id="toast" class="toast"></div>
 
 <script>
-function openInvite(){
-  start.classList.add("hidden");
-  invite.classList.remove("hidden");
-  music.play().catch(()=>{});
+/* уведомление */
+function showToast(text){
+  toast.textContent=text;
+  toast.classList.add("show");
+  setTimeout(()=>toast.classList.remove("show"),3000);
 }
 
-function toggleMusic(){
-  if(music.paused) music.play();
-  else music.pause();
-}
+/* проверка имени */
+function validateName(){
+  const val=name.value.trim();
 
-/* таймер */
-const wedding = new Date("2026-05-23T15:00:00");
-setInterval(()=>{
-  const diff = wedding - new Date();
-  const d = Math.floor(diff/86400000);
-  const h = Math.floor(diff/3600000)%24;
-  const m = Math.floor(diff/60000)%60;
-  timer.textContent = `До свадьбы: ${d} д ${h} ч ${m} мин`;
-},1000);
+  if(val.split(/\s+/).length < 2){
+    name.classList.add("error");
+    showToast("Пожалуйста, укажите имя и фамилию");
+    name.focus();
+    return false;
+  }
+
+  name.classList.remove("error");
+  return true;
+}
 
 /* сохранение */
-function saveAnswer(answer){
-  const list = JSON.parse(localStorage.getItem("wedding")) || [];
+function saveAnswer(ans){
 
-  list.push({
-    name:name.value || "Без имени",
-    guests:count.value || 1,
-    answer:answer,
+  if(!validateName()) return;
+
+  const data=JSON.parse(localStorage.getItem("wedding"))||[];
+
+  data.push({
+    name:name.value,
+    guests:count.value,
+    answer:ans,
     transfer:transfer.value,
     food:food.value,
     alcohol:alcohol.value,
@@ -211,61 +203,50 @@ function saveAnswer(answer){
     time:new Date().toLocaleString("ru-RU")
   });
 
-  localStorage.setItem("wedding", JSON.stringify(list));
-  alert("Спасибо за ответ ❤️");
+  localStorage.setItem("wedding",JSON.stringify(data));
+  updateTotal();
+  showToast("Ответ сохранён ❤️ see you!");
+}
+
+/* подсчёт */
+function updateTotal(){
+  const data=JSON.parse(localStorage.getItem("wedding"))||[];
+  let sum=0;
+  data.forEach(r=>{
+    if(r.answer==="Да") sum+=Number(r.guests);
+  });
+  totalGuests.textContent="Всего подтвердили: "+sum+" гостей";
+}
+
+/* пароль */
+function adminDownload(){
+  const pass=prompt("Введите пароль");
+  if(pass==="3005") downloadCSV();
 }
 
 /* Excel */
 function downloadCSV(){
-  const data = JSON.parse(localStorage.getItem("wedding")) || [];
+  const data=JSON.parse(localStorage.getItem("wedding"))||[];
 
-  const rows = [[
-    "Имя","Количество гостей","Ответ",
-    "Трансфер","Питание","Алкоголь","Ребёнок","Время"
-  ]];
+  const rows=[["Имя","Гостей","Ответ","Трансфер","Питание","Алкоголь","Ребёнок","Время"]];
 
   data.forEach(r=>{
-    rows.push([
-      r.name,r.guests,r.answer,
-      r.transfer,r.food,r.alcohol,r.kids,r.time
-    ]);
+    rows.push([r.name,r.guests,r.answer,r.transfer,r.food,r.alcohol,r.kids,r.time]);
   });
 
-  const csv = rows.map(r=>r.join(";")).join("\n");
-  const BOM = "\uFEFF";
+  const csv=rows.map(r=>r.join(";")).join("\n");
 
-  const blob = new Blob([BOM + csv], {type:"text/csv;charset=utf-8;"});
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = "answers.csv";
+  const blob=new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8;"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="answers.csv";
   a.click();
 }
 
-/* лепестки */
-const canvas=document.getElementById("petals");
-const ctx=canvas.getContext("2d");
-canvas.width=innerWidth;
-canvas.height=innerHeight;
-
-let petals=[];
-for(let i=0;i<40;i++){
-  petals.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,s:Math.random()*1+0.5});
-}
-
-function draw(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle="#ffdbe8";
-  petals.forEach(p=>{
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,5,0,6.28);
-    ctx.fill();
-    p.y+=p.s;
-    if(p.y>innerHeight)p.y=0;
-  });
-  requestAnimationFrame(draw);
-}
-draw();
+updateTotal();
 </script>
 
 </body>
 </html>
+
+
